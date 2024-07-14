@@ -34,13 +34,14 @@ public class Main {
                 case "-o" -> {
                     try {
                         if(args[i + 1] == null || args[i + 1].matches("-[opafs?]+$")) {
-                            logger.warn("You did not specify the path. Usage -o [full path]");
+                            logger.warn("You did not specify the path. Usage: -o [full path]");
+                            outputUsage();
                             return;
                         }
 
                         if((os.contains("Windows") && !args[i + 1]
                                 .matches("^[a-zA-Z]:\\\\(((?![<>:\"/\\\\|?*]).)+((?<![ .])\\\\)?)*$")
-                           ) || (os.contains("Linux") || os.equalsIgnoreCase("macOS")) && !args[i + 1]
+                           ) || (os.contains("Linux") || os.contains("Mac OS") || os.contains("Unix")) && !args[i + 1]
                                 .matches("^(/[^/ ]*)+/?$")) {
                             logger.warn("Invalid path!");
                             outputUsage();
@@ -58,6 +59,7 @@ public class Main {
                     try {
                         if(args[i + 1] == null || args[i + 1].matches("-[opafs?]+$")) {
                             logger.warn("You did not specify the prefix. Usage: -p [file prefix]");
+                            outputUsage();
                             return;
                         }
 
@@ -118,21 +120,17 @@ public class Main {
             try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 while((line = reader.readLine()) != null) {
-                    if(line.matches("[+-]?[0-9]*\\.[0-9]+") ||
-                            line.matches("[+-]?\\d*\\.\\d+([eE][+-]?\\d+)?")) {
-                        try {
+                    try {
+                        if(line.matches("[+-]?[0-9]*\\.[0-9]+") ||
+                                line.matches("[+-]?\\d*\\.\\d+([eE][+-]?\\d+)?")) {
                             float parsedFloat = Float.parseFloat(line);
                             floats.add(parsedFloat);
-                        } catch (NumberFormatException e) {
-                            strings.add(line);
-                        }
-                    } else {
-                        try {
+                        } else {
                             long parsedLong = Long.parseLong(line);
                             integers.add(parsedLong);
-                        } catch (NumberFormatException e) {
-                            strings.add(line);
                         }
+                    } catch (NumberFormatException e) {
+                        strings.add(line);
                     }
                 }
             } catch (IOException e) {
@@ -200,10 +198,10 @@ public class Main {
         System.out.println("[] - required");
         System.out.println("\tutil.jar {-o [full path]} {-p [file prefix]} {-a} {-f} {-s} [paths to .txt files]");
         System.out.println("Parameters:");
-        System.out.println("\t-o: Sets a path where the filtered files will be stored.");
-        System.out.println("\t-p: Sets a prefix in the filtered files' file names.");
+        System.out.println("\t-o: Sets a path where the filtered files will be stored. (default=current directory)");
+        System.out.println("\t-p: Sets a prefix in the filtered files' file names. (default=no prefix)");
         System.out.println("\t-a: Using this parameter the file contents of filtered files will not be rewritten.");
-        System.out.println("\t-s: Outputs a short statistic after file filtration.");
+        System.out.println("\t-s: Outputs a short statistic after file filtration. (default)");
         System.out.println("\t-f: Outputs a full statistic after file filtration.");
     }
 

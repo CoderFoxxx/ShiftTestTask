@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Отфильтрованный файл
+ * Файл, содержащий в себе данные определенного типа.
  * @param <T> тип данных, который будет храниться в файле
  */
 public class FilteredFile<T> {
@@ -15,7 +15,7 @@ public class FilteredFile<T> {
     private final File file;
 
     /**
-     * Модификатор, отвечающий за перезаписывание существующих данных в отфильтрованном файле
+     * Модификатор, отвечающий за перезаписывание существующих данных в файле
      */
     private boolean rewrite;
 
@@ -27,8 +27,8 @@ public class FilteredFile<T> {
     private final Logger logger = Main.getLoggerInstance();
 
     /**
-     * Конструктор отфильтрованного файла
-     * @param file файл, куда будут записываться отфильтрованные данные
+     * Конструктор файла с данными определенного типа <code>T</code>
+     * @param file файл, куда будут записываться данные
      * @param rewrite модификатор перезаписи существующих данных в файле
      */
     public FilteredFile(File file, boolean rewrite) {
@@ -38,8 +38,8 @@ public class FilteredFile<T> {
     }
 
     /**
-     * Запись отфильтрованных данных в файл
-     * @param items отфильтрованные данные
+     * Запись данных в файл
+     * @param items данные
      */
     @SafeVarargs
     public final void write(T... items) {
@@ -81,6 +81,10 @@ public class FilteredFile<T> {
         }
     }
 
+    /**
+     * Чтение данных с файла
+     * @return массив строк &ndash; прочитанные данные
+     */
     public String[] read() {
         try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
             return reader.lines().toArray(String[]::new);
