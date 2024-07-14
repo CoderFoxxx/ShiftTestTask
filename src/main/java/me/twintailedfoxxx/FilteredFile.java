@@ -8,6 +8,7 @@ import java.util.List;
  * Файл, содержащий в себе данные определенного типа.
  * @param <T> тип данных, который будет храниться в файле
  */
+@SuppressWarnings("ignored")
 public class FilteredFile<T> {
     /**
      * Закрепленный за фильтром файл
@@ -50,13 +51,13 @@ public class FilteredFile<T> {
         if(!file.exists()) {
             try {
                 if(!file.getParentFile().exists()) {
-                    if(file.getParentFile().mkdirs()) {
-                        logger.info("Created directory " + file.getParentFile().getAbsolutePath());
+                    if(!file.getParentFile().mkdirs()) {
+                        logger.warn("Directory " + file.getParentFile().getAbsolutePath() + " was not created.");
                     }
                 }
 
-                if(file.createNewFile()) {
-                    logger.info("Created file " + file.getAbsolutePath());
+                if(!file.createNewFile()) {
+                    logger.warn("File " + file.getAbsolutePath() + " was not created.");
                 }
             } catch (IOException e) {
                 logger.severe("Failed to create file " + file.getAbsolutePath() + ": " + e.getMessage());
