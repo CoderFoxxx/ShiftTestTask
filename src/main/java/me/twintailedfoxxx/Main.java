@@ -193,16 +193,18 @@ public class Main {
     }
 
     private static void outputUsage() {
-        System.out.println("Usage:");
-        System.out.println("{} - optional");
-        System.out.println("[] - required");
-        System.out.println("\tutil.jar {-o [full path]} {-p [file prefix]} {-a} {-f} {-s} [paths to .txt files]");
-        System.out.println("Parameters:");
-        System.out.println("\t-o: Sets a path where the filtered files will be stored. (default=current directory)");
-        System.out.println("\t-p: Sets a prefix in the filtered files' file names. (default=no prefix)");
-        System.out.println("\t-a: Using this parameter the file contents of filtered files will not be rewritten.");
-        System.out.println("\t-s: Outputs a short statistic after file filtration. (default)");
-        System.out.println("\t-f: Outputs a full statistic after file filtration.");
+        System.out.println("""
+                Usage:
+                {} - optional
+                [] - required
+                \tutil.jar {-o [full path]} {-p [file prefix]} {-a} {-f} {-s} [paths to .txt files]
+                Parameters:
+                \t-o: Sets a path where the filtered files will be stored. (default=current directory)
+                \t-p: Sets a prefix in the filtered files' file names. (default=no prefix)
+                \t-a: Using this parameter the file contents of filtered files will not be rewritten
+                \t-s: Outputs a short statistic after file filtration. (default)
+                \t-f: Outputs a full statistic after file filtration.
+                """);
     }
 
     public static Logger getLoggerInstance() {
